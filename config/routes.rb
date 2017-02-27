@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get 'edit_user', to: 'overview#edit_user'
   post 'create_user', to: 'overview#create_user'
   patch 'save_me', to: 'overview#save_me'
-  get '/:id', to: 'overview#show'
 
   mount Flip::Engine => '/flip'
+  get '/:id', to: 'overview#show'
 end

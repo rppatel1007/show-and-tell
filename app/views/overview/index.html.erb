@@ -25,7 +25,7 @@
     </div>
   <% end %>
 
-   <% if @user.present? %>
+   <% if @current_user.present? %>
     <%= render partial: 'user_card' %>
   <% else %>
     <div class='sub-container user-container'>
