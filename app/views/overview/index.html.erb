@@ -1,5 +1,6 @@
 <% is_js_enhancement_on = Flip.js_update_enhancement? %>
-<div class='center-content <%= is_js_enhancement_on ? 'js-enhance' : '' %>' data-no-turbolink>
+<!-- NOTE: This could be more sophisticated but similarly implemented with t3 behaviors -->
+<div class='center-content <%= is_js_enhancement_on ? 'js-enhance' : '' %>'>
   <div class='sub-container'>
     <%= flip_form_helper(:user, :url => {:action => 'create_user' }) do |f| %>
       <%= f.input :first_name %>

@@ -18,7 +18,6 @@ class OverviewController < ApplicationController
   def edit_user
     @user = User.find_by_id(params['id'])
 
-    # render partial: '/overview/edit_user_js_enh' and return if Flip.js_update_enhancement?
     render partial: '/overview/edit_user'
   end
 
