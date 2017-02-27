@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  root 'overview#old_index'
-  get 'overview/index', to: 'overview#old_index'
+  root 'overview#index'
+  get 'overview/index', to: 'overview#index'
   get 'users', to: 'overview#index'
   get 'who_am_i', to: 'overview#who_am_i'
   get 'edit_user', to: 'overview#edit_user'

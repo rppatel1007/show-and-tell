@@ -1,12 +1,8 @@
 class OverviewController < ApplicationController
   def index
-    raise_404 unless Flip.restful_routes?
-    index_actions
-  end
-
-  def old_index
-    index_actions
-    render 'index'
+    raise_404 if route_toggled_off
+    @users = User.all || []
+    @chucknorris = JSON.parse(HTTParty.get('https://api.chucknorris.io/jokes/random').body)
   end
 
   def create_user
@@ -37,9 +33,9 @@ class OverviewController < ApplicationController
     params.require(:user).permit(:id, :first_name, :middle_name, :last_name, :role)
   end
 
-  def index_actions
-    @users = User.all || []
-    @chucknorris = JSON.parse(HTTParty.get('https://api.chucknorris.io/jokes/random').body)
+  def route_toggled_off
+    restful_routes = [ '/users' ]
+    !Flip.restful_routes? && restful_routes.include?(request.path)
   end
 
   def raise_404
