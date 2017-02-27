@@ -1,7 +1,12 @@
 class OverviewController < ApplicationController
   def index
-    @users = User.all || []
-    @chucknorris = JSON.parse(HTTParty.get('https://api.chucknorris.io/jokes/random').body)
+    raise_404 unless Flip.restful_routes?
+    index_actions
+  end
+
+  def old_index
+    index_actions
+    render 'index'
   end
 
   def create_user
@@ -30,5 +35,14 @@ class OverviewController < ApplicationController
 
   def user_params
     params.require(:user).permit(:id, :first_name, :middle_name, :last_name, :role)
+  end
+
+  def index_actions
+    @users = User.all || []
+    @chucknorris = JSON.parse(HTTParty.get('https://api.chucknorris.io/jokes/random').body)
+  end
+
+  def raise_404
+    raise ActionController::RoutingError.new('Not Found')
   end
 end
