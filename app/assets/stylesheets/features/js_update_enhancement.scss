@@ -1,8 +1,10 @@
-.user-row.js-enhance{
-  &:hover {
-    background-color: #FDE74C;
-  }
-  &.highlighter {
-    background-color: #06D6A0;
+.center-content.js-enhance {
+  .user-row {
+    &:hover {
+      background-color: #FDE74C;
+    }
+    &.highlighter {
+      background-color: #06D6A0;
+    }
   }
 }
