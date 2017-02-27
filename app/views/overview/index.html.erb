@@ -1,4 +1,5 @@
-<div class='center-content'>
+<% is_js_enhancement_on = Flip.js_update_enhancement? %>
+<div class='center-content <%= is_js_enhancement_on ? 'js-enhance' : '' %>' data-no-turbolink>
   <div class='sub-container'>
     <%= flip_form_helper(:user, :url => {:action => 'create_user' }) do |f| %>
       <%= f.input :first_name %>
@@ -8,11 +9,10 @@
       <%= f.button :submit %>
     <% end %>
   </div>
-
   <% if @users.present? %>
     <div class='sub-container no-padding no-background'>
       <% @users.sort_by(&:full_name).each do |user| %>
-        <div class='row user-row' data-id="<%= user.id %>">
+        <div class='row user-row <%= is_js_enhancement_on ? 'js-enhance' : '' %>' data-id="<%= user.id %>">
           <div class='avatar'>
             <%= image_tag "https://robohash.org/#{user.role}#{user.middle_name}.png" %>
           </div>
@@ -25,7 +25,7 @@
     </div>
   <% end %>
 
-  <div class='sub-container user-container'>
+  <div class='sub-container user-container <%= is_js_enhancement_on ? 'js-enhance' : '' %>'>
     <div class='row joke'><%= @chucknorris['value'] %></div>
   </div>
 
