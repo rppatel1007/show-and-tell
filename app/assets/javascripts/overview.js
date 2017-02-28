@@ -2,6 +2,7 @@
 $(document).on('ready page:load', function() {
   $('.user-row').click(load_user);
   $('.center-content').on('click', '.edit', edit_user);
+  $('form').parsley();
 });
 
 function load_user() {
@@ -20,7 +21,7 @@ function edit_user() {
 
 function load_user_container(data) {
   $('.user-container').remove();
-  $('.center-content').append(data);    
+  $('.center-content').append(data);
 }
 
 function create_user_html(data) {

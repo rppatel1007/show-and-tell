@@ -13,4 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require parsley.min
+//= require overview
 //= require_tree .
