@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   patch 'save_me', to: 'overview#save_me'
 
   mount Flip::Engine => '/flip'
+  get '/:id', to: 'overview#show'
 end
