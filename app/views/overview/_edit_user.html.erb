@@ -9,7 +9,7 @@
         <%= f.input :middle_name %>
         <%= f.input :last_name %>
         <%= f.input :role %>
-        <%= f.button :submit %>
+        <%= flip_form_button(f, @user.id)%>
       <% end %>
     </div>
   </div>
