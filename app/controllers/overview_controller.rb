@@ -6,7 +6,11 @@ class OverviewController < ApplicationController
 
   def create_user
     @user = User.new(user_params)
+    if Flip.optional_middle_name?
+      @user.middle_name = "NMN" if @user.middle_name.empty?
+    end
     @user.save
+    puts @user.errors.messages
     redirect_to root_path
   end
 
