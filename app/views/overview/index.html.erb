@@ -1,13 +1,28 @@
 <div class='center-content'>
-  <div class='sub-container'>
-    <%= flip_form_helper(:user, :url => {:action => 'create_user' }) do |f| %>
-      <%= f.input :first_name %>
-      <%= f.input :middle_name %>
-      <%= f.input :last_name %>
-      <%= f.input :role %>
-      <%= f.button :submit %>
-    <% end %>
-  </div>
+  <% if Flip.optional_middle_name? %>
+    <div class='sub-container'>
+      <%= flip_form_helper(:user, :url => {:action => 'create_user' }) do |f| %>
+        <%= f.input :first_name %>
+        <!-- <%= f.error :first_name %> -->
+        <%= f.input :middle_name, required: false %>
+        <%= f.input :last_name %>
+        <!-- <%= f.error :last_name %> -->
+        <%= f.input :role %>
+        <!-- <%= f.error :role %> -->
+        <%= f.button :submit %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class='sub-container'>
+      <%= flip_form_helper(:user, :url => {:action => 'create_user' }) do |f| %>
+        <%= f.input :first_name %>
+        <%= f.input :middle_name, required: true %>
+        <%= f.input :last_name %>
+        <%= f.input :role %>
+        <%= f.button :submit %>
+      <% end %>
+    </div>
+  <% end %>
 
   <% if @users.present? %>
     <div class='sub-container no-padding no-background'>
