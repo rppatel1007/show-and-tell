@@ -23,7 +23,7 @@ class OverviewController < ApplicationController
   def save_me
     @user = User.find_by_id(user_params['id'])
     @user.update(user_params)
-    redirect_to root_path
+    Flip.edit_in_place? ? render(json: @user) : redirect_to(root_path)
   end
 
   private

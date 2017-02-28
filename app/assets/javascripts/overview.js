@@ -2,6 +2,7 @@
 $(document).on('ready page:load', function() {
   $('.user-row').click(load_user);
   $('.center-content').on('click', '.edit', edit_user);
+  $('.center-content').on('click', '.edit-save', save_user);
 });
 
 function load_user() {
@@ -16,6 +17,19 @@ function edit_user() {
   $.get('/edit_user?id=' + id, function(data) {
     load_user_container(data);
   })
+}
+
+function save_user(){
+  var id = $(this).data('id');
+  var data = $(this).parent().serialize();
+  $.ajax({
+    url : '/save_me?id=' + id,
+    data : data,
+    type : 'PATCH',
+    success: function(returned_user){
+      load_user_container(create_user_html(returned_user));
+    }
+  });
 }
 
 function load_user_container(data) {
