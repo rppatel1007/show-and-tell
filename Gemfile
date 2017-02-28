@@ -51,4 +51,5 @@ group :acceptance, :test, :travis do
   gem 'minitest-rails'
   gem 'phantomjs', '~> 1.9.8.0'
   gem 'mocha', '~> 1.1.0'
+  gem 'sqlite3'
 end

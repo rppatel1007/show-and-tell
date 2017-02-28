@@ -1,13 +1,17 @@
 class OverviewController < ApplicationController
   def index
-    @users = User.all || []
-    @chucknorris = JSON.parse(HTTParty.get('https://api.chucknorris.io/jokes/random').body)
+    index_actions(User.new)
   end
 
   def create_user
     @user = User.new(user_params)
-    @user.save
-    redirect_to root_path
+    if @user.valid?
+      @user.save
+      index_actions(User.new)
+    else
+      index_actions(@user)
+    end
+    render 'index'
   end
 
   def who_am_i
@@ -30,5 +34,11 @@ class OverviewController < ApplicationController
 
   def user_params
     params.require(:user).permit(:id, :first_name, :middle_name, :last_name, :role)
+  end
+
+  def index_actions(user)
+    @users = User.all || []
+    @chucknorris = JSON.parse(HTTParty.get('https://api.chucknorris.io/jokes/random').body)
+    @user = user
   end
 end

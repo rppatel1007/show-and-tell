@@ -8,4 +8,7 @@ class Feature < ActiveRecord::Base
 
   feature :placeholder_over_label,
           description: 'When this toggle is turned on, there will no longer be labels.'
+
+  feature :middle_name_optional,
+          description: 'When this toggle is turned on, there middle name will be optional'
 end
