@@ -8,4 +8,8 @@ class Feature < ActiveRecord::Base
 
   feature :placeholder_over_label,
           description: 'When this toggle is turned on, there will no longer be labels.'
+
+  feature :restful_routes,
+        default: true,
+        description: 'When this toggle is turned on, the profile route will follow RESTful conventions.'
 end

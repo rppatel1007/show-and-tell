@@ -1,5 +1,6 @@
 class OverviewController < ApplicationController
   def index
+    raise_404 if route_toggled_off
     @users = User.all || []
     @chucknorris = JSON.parse(HTTParty.get('https://api.chucknorris.io/jokes/random').body)
   end
@@ -30,5 +31,23 @@ class OverviewController < ApplicationController
 
   def user_params
     params.require(:user).permit(:id, :first_name, :middle_name, :last_name, :role)
+  end
+
+  def route_toggled_off
+    new_route_off || old_route_off
+  end
+
+  def new_route_off
+    new_routes = [ '/users' ]
+    !Flip.restful_routes? && new_routes.include?(request.path)
+  end
+
+  def old_route_off
+    old_routes = [ '/overview/index' ]
+    Flip.restful_routes? && old_routes.include?(request.path)
+  end
+
+  def raise_404
+    raise ActionController::RoutingError.new('Not Found')
   end
 end
