@@ -34,8 +34,17 @@ class OverviewController < ApplicationController
   end
 
   def route_toggled_off
-    restful_routes = [ '/users' ]
-    !Flip.restful_routes? && restful_routes.include?(request.path)
+    new_route_off || old_route_off
+  end
+
+  def new_route_off
+    new_routes = [ '/users' ]
+    !Flip.restful_routes? && new_routes.include?(request.path)
+  end
+
+  def old_route_off
+    old_routes = [ '/overview/index' ]
+    Flip.restful_routes? && old_routes.include?(request.path)
   end
 
   def raise_404
