@@ -13,6 +13,14 @@
     <div class='sub-container no-padding no-background'>
       <% @users.sort_by(&:full_name).each do |user| %>
         <div class='row user-row' data-id="<%= user.id %>">
+          <% if Flip.on? :feature_3 %>
+            <div class='mr-t'><img src='https://www.biography.com/.image/c_fill,cs_srgb,dpr_1.0,g_face,h_300,q_80,w_300/MTIwNjA4NjMzNjc0ODkyODEy/mr-t-413140-1-402.jpg'>
+              <div>Edit me, fool!</div>
+            </div>
+            <div class='mr-t-ok'><img src='http://www.supersilly.com/~greg/realultimatemrt/mr-t.gif'>
+              <div>Mr. T Approves!</div>
+            </div>
+         <% end %>
           <div class='avatar'>
             <%= image_tag "https://robohash.org/#{user.role}#{user.middle_name}.png" %>
           </div>
@@ -28,5 +36,9 @@
   <div class='sub-container user-container'>
     <div class='row joke'><%= @chucknorris['value'] %></div>
   </div>
+
+  <% if Flip.on? :feature_3 %>
+    <script> document.feature_3 = true </script>
+  <% end %>
 
 </div>
