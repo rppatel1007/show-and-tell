@@ -1,4 +1,6 @@
-<div class='center-content'>
+<% is_js_enhancement_on = Flip.js_update_enhancement? %>
+<!-- NOTE: This could be more sophisticated but similarly implemented with t3 behaviors -->
+<div class='center-content <%= is_js_enhancement_on ? 'js-enhance' : '' %>'>
   <div class='sub-container'>
     <%= flip_form_helper(:user, :url => {:action => 'create_user' }) do |f| %>
       <%= f.input :first_name %>
@@ -8,7 +10,6 @@
       <%= f.button :submit %>
     <% end %>
   </div>
-
   <% if @users.present? %>
     <div class='sub-container no-padding no-background'>
       <% @users.sort_by(&:full_name).each do |user| %>
