@@ -1,41 +1,63 @@
 
 $(document).on('ready page:load', function() {
-  $('.user-row').click(load_user);
-  $('.center-content').on('click', '.edit', edit_user);
+  // bar_code();
 });
 
-function load_user() {
-  var id = $(this).data('id');
-  $.get('/who_am_i?id=' + id, function(data) {
-    load_user_container(create_user_html(data));
-  })
-}
+$(function() {
+ Quagga.init({
+    inputStream : {
+      name : "Live",
+      type : "LiveStream",
+      target: document.querySelector('#yourElement')    // Or '#yourElement' (optional)
+    },
+    decoder : {
+      readers : ["code_128_reader"]
+    }
+  }, function(err) {
+      if (err) {
+          console.log(err);
+          return
+      }
+      console.log("Initialization finished. Ready to start");
+      Quagga.start();
+  });
 
-function edit_user() {
-  var id = $(this).data('id');
-  $.get('/edit_user?id=' + id, function(data) {
-    load_user_container(data);
-  })
-}
+  // Quagga.onProcessed(function(result) {
+  //     var drawingCtx = Quagga.canvas.ctx.overlay,
+  //         drawingCanvas = Quagga.canvas.dom.overlay;
 
-function load_user_container(data) {
-  $('.user-container').remove();
-  $('.center-content').append(data);    
-}
+  //     if (result) {
+  //         if (result.boxes) {
+  //             drawingCtx.clearRect(0, 0, parseInt(drawingCanvas.getAttribute("width")), parseInt(drawingCanvas.getAttribute("height")));
+  //             result.boxes.filter(function (box) {
+  //                 return box !== result.box;
+  //             }).forEach(function (box) {
+  //                 Quagga.ImageDebug.drawPath(box, {x: 0, y: 1}, drawingCtx, {color: "green", lineWidth: 2});
+  //             });
+  //         }
 
-function create_user_html(data) {
-  return "<div class='sub-container user-container'>" +
-         "   <div class='row'>" +
-         "     <img src='https://robohash.org/" + data.role + data.middle_name + ".png' class='robot' />" +
-         "   </div>" +
-         "   <div class='row name'>" +
-         "     <p>" + data.first_name + "</p>" +
-         "     <p>" + data.middle_name + "</p>" +
-         "     <p>" + data.last_name + "</p>" +
-         "     <p>the " + data.role + "</p>" +
-         "   </div>" +
-         "   <div class='row'>" +
-         "     <input type='button' class='btn edit' value='Edit' data-id='" + data.id + "' />" +
-         "   </div>" +
-         "</div>";
-}
+  //         if (result.box) {
+  //             Quagga.ImageDebug.drawPath(result.box, {x: 0, y: 1}, drawingCtx, {color: "#00F", lineWidth: 2});
+  //         }
+
+  //         if (result.codeResult && result.codeResult.code) {
+  //             Quagga.ImageDebug.drawPath(result.line, {x: 'x', y: 'y'}, drawingCtx, {color: 'red', lineWidth: 3});
+  //         }
+  //     }
+  // });
+
+  Quagga.onDetected(function(result) {
+      var code = result.codeResult.code;
+
+      if (App.lastResult !== code) {
+          App.lastResult = code;
+          var $node = null, canvas = Quagga.canvas.dom.image;
+
+          $node = $('<li><div class="thumbnail"><div class="imgWrapper"><img /></div><div class="caption"><h4 class="code"></h4></div></div></li>');
+          $node.find("img").attr("src", canvas.toDataURL());
+          $node.find("h4.code").html(code);
+          $("#result_strip ul.thumbnails").prepend($node);
+      }
+  });
+
+});

@@ -1,32 +1,6 @@
 <div class='center-content'>
-  <div class='sub-container'>
-    <%= flip_form_helper(:user, :url => {:action => 'create_user' }) do |f| %>
-      <%= f.input :first_name %>
-      <%= f.input :middle_name %>
-      <%= f.input :last_name %>
-      <%= f.input :role %>
-      <%= f.button :submit %>
-    <% end %>
-  </div>
 
-  <% if @users.present? %>
-    <div class='sub-container no-padding no-background'>
-      <% @users.sort_by(&:full_name).each do |user| %>
-        <div class='row user-row' data-id="<%= user.id %>">
-          <div class='avatar'>
-            <%= image_tag "https://robohash.org/#{user.role}#{user.middle_name}.png" %>
-          </div>
-          <div class='user-details'>
-            <p><%= user.full_name %></p>
-          </div>
-          <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
-        </div>
-      <% end %>
-    </div>
-  <% end %>
+  <div id="interactive" class="viewport"></div>
 
-  <div class='sub-container user-container'>
-    <div class='row joke'><%= @chucknorris['value'] %></div>
-  </div>
-
+  <div class='result-strip'></div>
 </div>
